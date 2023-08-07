@@ -1,6 +1,5 @@
 package com.greatlearning.emp.model;
 
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,40 +12,46 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
 public class User {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	private String username;
 	private String password;
-	
-	
-    public User(String username, String password) { this.username = username;
-	this.password = password; }
-	 
-	
-	@ManyToMany(mappedBy="users", cascade=CascadeType.PERSIST, fetch=FetchType.EAGER)
+
+	public User(String username, String password) {
+		this.username = username;
+		this.password = password;
+	}
+
+	@ManyToMany(mappedBy = "users",cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@JsonIgnoreProperties("users")
 	private Set<Role> roles;
 	
 	
-	  public void addRole(Role role) { 
-		  if (this.roles == null) {
-			  this.roles = new
-	  HashSet<>(); 
-			  } 
-		  this.roles.add(role); 
-		  role.getUsers().add(this); }
-	 
+
+	public void addRole(Role role) {
+	    if (role != null) {
+	        if (this.roles == null) {
+	            this.roles = new HashSet<>();
+	        }
+	        this.roles.add(role);
+	        role.getUsers().add(this);
+	    }
+	}
+
 }

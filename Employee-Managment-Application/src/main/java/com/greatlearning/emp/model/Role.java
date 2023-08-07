@@ -14,6 +14,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -33,7 +36,9 @@ public class Role {
 	private String role;
 	
 	
-    public Role(String role){ this.role = role; }
+    public Role(String role){ 
+    	this.role = role;
+    }
 	 
 	
 	@ManyToMany
@@ -42,6 +47,7 @@ public class Role {
 			joinColumns = @JoinColumn(name="role_id", nullable = false),
 			inverseJoinColumns = @JoinColumn(name="user_id", nullable = false)
 			)
+	
 	private Set<User> users = new HashSet<>();
 
 }

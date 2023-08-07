@@ -33,8 +33,6 @@ public class SecurityConfiguration {
 	}
 
 	@Bean
-
-	// Used for authentication
 	public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
 		AuthenticationManagerBuilder authenticationManagerBuilder = http
 				.getSharedObject(AuthenticationManagerBuilder.class);
@@ -51,10 +49,10 @@ public class SecurityConfiguration {
 		http.authorizeRequests().antMatchers("/h2-console**", "/login**", "/logout**").permitAll()
 		        .antMatchers("/api/registration/roles","/api/registration/users").permitAll()
 		        .antMatchers("/api/registration/**").authenticated()
-				.antMatchers(HttpMethod.GET, "/api/employees**", "/api/employees/**","/api/registration/**").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
+				.antMatchers(HttpMethod.GET, "/api/employees**", "/api/employees/**","/api/employees/search/**","/api/employees/sort/**").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
 				.antMatchers(HttpMethod.POST, "/api/employees**").hasAnyRole("ADMIN", "SUPER_ADMIN")
 				.antMatchers(HttpMethod.PUT, "/api/employees/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
-				.antMatchers(HttpMethod.DELETE, "/api/employees/**").hasRole("SUPER_ADMIN").anyRequest().fullyAuthenticated()
+				.antMatchers(HttpMethod.DELETE, "/api/employees/**").hasRole("ADMIN").anyRequest().fullyAuthenticated()
 				.and().httpBasic();
 
 		return http.build();

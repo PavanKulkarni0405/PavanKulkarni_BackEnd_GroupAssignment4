@@ -36,9 +36,9 @@ public class EmployeeServiceImpl implements EmployeeService  {
 		Optional<Employee> employee1 = this.employeeRepository.findById(id);
 		if(employee1.isPresent()) {
 			Employee tempEmployee = employee1.get();
-			tempEmployee.setFirstName(tempEmployee.getFirstName());
-			tempEmployee.setLastName(tempEmployee.getLastName());
-			tempEmployee.setEmail(tempEmployee.getEmail());
+			tempEmployee.setFirstName(employee.getFirstName());
+			tempEmployee.setLastName(employee.getLastName());
+			tempEmployee.setEmail(employee.getEmail());
 			return employeeRepository.save(tempEmployee);
 		}
 		throw new IllegalArgumentException("Invalid id passed");

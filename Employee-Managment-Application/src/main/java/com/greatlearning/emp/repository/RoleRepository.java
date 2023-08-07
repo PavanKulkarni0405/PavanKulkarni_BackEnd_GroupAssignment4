@@ -10,7 +10,7 @@ import com.greatlearning.emp.model.Role;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Integer> {
 	
-	Role findRoleByName(String name);
+	//Role findRoleByName(String name);
 
 	
 

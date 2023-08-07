@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.greatlearning.emp.model.Employee;
@@ -42,18 +43,18 @@ public class EmployeeController {
 		this.employeeService.deleteEmployee(id);
 	}
 	
-	@GetMapping("/search/{id}")
+	@GetMapping("/{id}")
 	public Employee findEmployeeById(@PathVariable("id") long id) {
 		return this.employeeService.findEmployeeById(id);
 	}
 	
-	@GetMapping("/{firstName}")
+	@GetMapping("/search/{firstName}")
 	public Employee findEmployeeByFirstname(@PathVariable("firstName") String firstName) {
 		return this.employeeService.findEmployeeByFirstName(firstName);
 	}
 
 	@GetMapping("/sort")
-	public List<Employee> getAllEmployeesSortedByFirstName(@PathVariable("order") String order){
+	public List<Employee> getAllEmployeesSortedByFirstName(@RequestParam("order") String order){
 		
 		if("asc".equalsIgnoreCase(order)) {
 			return this.employeeService.findAllEmployeeByFirstNameAsc();
